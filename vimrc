@@ -257,7 +257,8 @@ else
 
     "set railscasts colorscheme when running vim in gnome terminal
     if $COLORTERM == 'gnome-terminal'
-        set term=gnome-256color
+        set ttymouse=xterm2
+        set term=xterm-256color
         colorscheme railscasts
     else
         colorscheme default
@@ -279,7 +280,7 @@ inoremap <C-L> <C-O>:nohls<CR>
 nnoremap <leader>b :BufExplorer<cr>
 
 "map to CommandT TextMate style finder
-nnoremap <leader>t :CommandT<CR>
+nnoremap <leader>q :CommandT<CR>
 
 "map Q to something useful
 noremap Q gq
