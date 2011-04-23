@@ -50,3 +50,6 @@ nmap <Leader>f= :Tabularize /=<CR>
 vmap <Leader>f= :Tabularize /=<CR>
 nmap <Leader>f: :Tabularize /:\zs<CR>
 vmap <Leader>f: :Tabularize /:\zs<CR>
+
+"
+let g:acp_behaviorSnipmateLength=1

@@ -50,10 +50,6 @@
 	path = bundle/endwise
 	url = git://github.com/tpope/vim-endwise.git
   ignore = dirty
-[submodule "bundle/snipmate"]
-	path = bundle/snipmate
-	url = git://github.com/akitaonrails/snipmate.vim.git
-  ignore = dirty
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
