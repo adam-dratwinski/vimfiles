@@ -11,6 +11,14 @@ set backupdir=~/.tmp
 set swapfile
 set dir =~/.tmp
 
+set nobackup                           " do not keep backups after close
+set nowritebackup                      " do not keep a backup while working
+set noswapfile                         " don't keep swp files either
+set backupdir=~/.tmp                   " store backups under ~/.vim/backup
+set backupcopy=yes                     " keep attributes of original file
+set backupskip=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+set directory=~/.tmp               " where to keep swp files
+
 "Spell checking
 map zp :setlocal spell spelllang=pl<CR>
 map zP :setlocal nospell<CR>
@@ -67,3 +75,24 @@ sunmap w
 sunmap b
 sunmap e
 
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+" use confirm instead of aborting an action
+set confirm
+
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+
+vnoremap <silent> <expr> P <sid>Repl()"
