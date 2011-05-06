@@ -95,6 +95,60 @@ function! s:Repl()
   return "p@=RestoreRegister()\<cr>"
 endfunction
 
+fu! OpenConqueBash()
+  if !exists('s:bash_open')
+    let s:bash_open = 1
+    VimShell
+    NameThisBuffer! bash
+  endif
+endfunction
+
+fu! OpenConqueRailsS()
+  if !exists('s:rails_s_open')
+    let s:rails_s_open = 1
+    VimShellInteractive rails s
+    NameThisBuffer! rails_s
+  endif
+endfunction
+
+fu! OpenConqueRailsC()
+  if !exists('s:rails_c_open')
+    let s:rails_c_open = 1
+    VimShellInteractive rails c
+    NameThisBuffer! rails_c
+  endif
+endfunction
+
+fu! GoToConqueBash()
+  call OpenConqueBash()
+  GotoNamedBuffer bash
+  set nonumber
+endfunction
+
+fu! GoToConqueRailsS()
+  call OpenConqueRailsS()
+  GotoNamedBuffer rails_s
+  set nonumber
+endfunction
+
+fu! GoToConqueRailsC()
+  call OpenConqueRailsC()
+  GotoNamedBuffer rails_c
+  set nonumber
+endfunction
+
 vnoremap <silent> <expr> P <sid>Repl()"
 
 set ic
+set encoding=utf-8
+
+" nerdcommenter
+" <leader>/ to invert comment on the current line/selection
+nmap <leader>ct :call NERDComment(0, "invert")<cr>
+vmap <leader>ct :call NERDComment(0, "invert")<cr>
+
+noremap <silent> <leader>t :TlistToggle<cr>
+noremap <silent> <leader>my :VimShellInteractive mysql -u root<cr>
+noremap <leader>sh :call GoToConqueBash()<cr>
+noremap <leader>rs :call GoToConqueRailsS()<cr>
+noremap <leader>rc :call GoToConqueRailsC()<cr>

@@ -136,9 +136,9 @@
 [submodule "bundle/tlib"]
 	path = bundle/tlib
 	url = https://github.com/tomtom/tlib_vim.git
-[submodule "vimproc"]
-	path = vimproc
+[submodule "bundle/vimproc"]
+	path = bundle/vimproc
 	url = https://github.com/Shougo/vimproc.git
-[submodule "vimshell"]
-	path = vimshell
+[submodule "bundle/vimshell"]
+	path = bundle/vimshell
 	url = https://github.com/Shougo/vimshell.git
