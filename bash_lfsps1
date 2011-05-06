@@ -1,0 +1,36 @@
+#!/bin/bash
+#eval $(dircolors -b /etc/dircolors)
+ 
+# Colors for PS1
+RED="\[\033[0;31m\]"
+GREEN="\[\033[0;32m\]"
+ORANGE="\[\033[0;33m\]"
+WHITE="\[\033[00m\]"
+ 
+case $TERM in
+  xterm*)
+    BOLD=$WHITE ;;
+  *)
+    BOLD="\[\033[0;38m\]" ;;
+esac
+ 
+# Prompt
+if [ $EUID -eq 0 ] ; then
+  PS1="$BOLD\h:$RED\u | $BOLD\D{%c} $RED| \w$WHITE\n$BOLD\\$ $WHITE"
+else
+  #PS1="$BOLD\h:$GREEN\u | $BOLD\D{%c} $GREEN| \w$WHITE\n$BOLD\\$ $WHITE"
+  #PS1="$BOLD\h:$GREEN\u | $BOLD\D{%c} "'| gemset: $(rvm env gemset name)''$(__git_ps1 " | branch: %s ")'"$GREEN| \w$WHITE\n$BOLD\\$ $WHITE"
+  #PS1="$BOLD\h:$GREEN\u $GREEN| \w$WHITE | $BOLD\D{%c} "'| gemset: $(rvm env gemset name)''$(__git_ps1 " | branch: %s ")'"\n$BOLD\\$ $WHITE"
+  #PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $WHITE | $BOLD\D{%c} "'| gemset: $(rvm env gemset name)''$(__git_ps1 " | branch: %s ")'"\n$BOLD\\$ $WHITE"
+  #PS1="$BOLD\u @ $GREEN\w$WHITE | $BOLD\D{%c} "'| gemset: $(rvm env gemset name)''$(__git_ps1 " | branch: %s ")'"\n$BOLD\\$ $WHITE"
+  PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $WHITE| $BOLD\t"'$(__git_ps1 " | branch: %s ")'"\n$BOLD\\$ $WHITE"
+  #PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $WHITE| $BOLD\t "'| gemset: $(rvm env gemset name)''$(__git_ps1 " | branch: %s ")'"\n$BOLD\\$ $WHITE"
+  #PS1="{${debian_chroot:+($debian_chroot)}userhost: \"\[\033[01;32m\]\u@\h\[\033[00m\]\", pwd: \"\[\033[01;34m\]\w\[\033[00m\]\"$WHITE, time: $BOLD\"\t\""', gemset: \"$(rvm env gemset name)\"''$(__git_ps1 ", branch: \"%s\"")}'"\n$BOLD\\$ $WHITE"
+fi
+ 
+export PS1
+ 
+#if [ "`locale charmap 2>/dev/null`" = "UTF-8" ]
+#then
+#  stty iutf8
+#fi
