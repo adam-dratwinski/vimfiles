@@ -152,3 +152,6 @@ noremap <silent> <leader>my :VimShellInteractive mysql -u root<cr>
 noremap <leader>sh :call GoToConqueBash()<cr>
 noremap <leader>rs :call GoToConqueRailsS()<cr>
 noremap <leader>rc :call GoToConqueRailsC()<cr>
+
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+

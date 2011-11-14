@@ -109,3 +109,4 @@ if [ -f "$(pwd)/.rvmrc" ] ; then source "$(pwd)/.rvmrc" ; fi
 if [ -f ~/.bash_lfsps1 ]; then
     . ~/.bash_lfsps1
 fi
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
