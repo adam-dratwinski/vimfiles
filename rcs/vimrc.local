@@ -1,0 +1,160 @@
+source ~/.vim/rcs/vimrc
+
+"My fav tab completions style
+set wildmode=longest,list,full
+
+"Additional commandT settings
+let g:CommandTMaxHeight=40
+
+"Move backup files into ~/.tmp directory
+set backupdir=~/.tmp
+set swapfile
+set dir =~/.tmp
+
+set nobackup                           " do not keep backups after close
+set nowritebackup                      " do not keep a backup while working
+set noswapfile                         " don't keep swp files either
+set backupdir=~/.tmp                   " store backups under ~/.vim/backup
+set backupcopy=yes                     " keep attributes of original file
+set backupskip=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+set directory=~/.tmp               " where to keep swp files
+
+"Spell checking
+map zp :setlocal spell spelllang=pl<CR>
+map zP :setlocal nospell<CR>
+map ze :setlocal spell spelllang=en_us<CR>
+map zE :setlocal nospell<CR>
+
+"Bubble single lines
+nmap <C-Up> [e
+nmap <C-Down> ]e
+"Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+"Move block of text
+nmap < <<
+nmap > >>
+vmap < <gv
+vmap > >gv
+
+"tabularized - autoformat tables :Tab/|
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+"tabularized mappings
+let mapleader='\'
+nmap <Leader>f= :Tabularize /=<CR>
+vmap <Leader>f= :Tabularize /=<CR>
+nmap <Leader>f: :Tabularize /:\zs<CR>
+vmap <Leader>f: :Tabularize /:\zs<CR>
+
+" => 
+imap <C-l> <Space>=><Space>
+
+set noerrorbells 
+set t_vb= 
+
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+"map <silent> w <Plug>CamelCaseMotion_w
+"map <silent> b <Plug>CamelCaseMotion_b
+"map <silent> e <Plug>CamelCaseMotion_e
+
+"sunmap w
+"sunmap b
+"sunmap e
+
+"omap <silent> iw <Plug>CamelCaseMotion_iw
+"xmap <silent> iw <Plug>CamelCaseMotion_iw
+"omap <silent> ib <Plug>CamelCaseMotion_ib
+"xmap <silent> ib <Plug>CamelCaseMotion_ib
+"omap <silent> ie <Plug>CamelCaseMotion_ie
+"xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+" use confirm instead of aborting an action
+set confirm
+
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+
+fu! OpenConqueBash()
+  if !exists('s:bash_open')
+    let s:bash_open = 1
+    VimShell
+    NameThisBuffer! bash
+  endif
+endfunction
+
+fu! OpenConqueRailsS()
+  if !exists('s:rails_s_open')
+    let s:rails_s_open = 1
+    VimShellInteractive rails s
+    NameThisBuffer! rails_s
+  endif
+endfunction
+
+fu! OpenConqueRailsC()
+  if !exists('s:rails_c_open')
+    let s:rails_c_open = 1
+    VimShellInteractive rails c
+    NameThisBuffer! rails_c
+  endif
+endfunction
+
+fu! GoToConqueBash()
+  call OpenConqueBash()
+  GotoNamedBuffer bash
+  set nonumber
+endfunction
+
+fu! GoToConqueRailsS()
+  call OpenConqueRailsS()
+  GotoNamedBuffer rails_s
+  set nonumber
+endfunction
+
+fu! GoToConqueRailsC()
+  call OpenConqueRailsC()
+  GotoNamedBuffer rails_c
+  set nonumber
+endfunction
+
+vnoremap <silent> <expr> P <sid>Repl()"
+
+set ic
+set encoding=utf-8
+
+" nerdcommenter
+" <leader>/ to invert comment on the current line/selection
+nmap <leader>ct :call NERDComment(0, "invert")<cr>
+vmap <leader>ct :call NERDComment(0, "invert")<cr>
+
+noremap <silent> <leader>t :TlistToggle<cr>
+noremap <silent> <leader>my :VimShellInteractive mysql -u root<cr>
+noremap <leader>sh :call GoToConqueBash()<cr>
+noremap <leader>rs :call GoToConqueRailsS()<cr>
+noremap <leader>rc :call GoToConqueRailsC()<cr>
+
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+" save files with root privileges
+command W w sudo:%
+command E e sudo:%

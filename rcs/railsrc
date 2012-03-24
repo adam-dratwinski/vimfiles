@@ -1,0 +1,4 @@
+--skip-bundle
+-d mysql
+-T
+-m ~/.vim/rails/template.rb

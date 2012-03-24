@@ -1,0 +1,9 @@
+[user]
+	name = Adam Dratwinski
+	email = arboooz@gmail.com
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 700x550+2051+220
+	history-view-vpane-position = 578
+	file-view-vpane-position = 1010
+	main-window-view = HistoryView

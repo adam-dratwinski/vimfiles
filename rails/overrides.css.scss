@@ -1,0 +1,13 @@
+body {
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+// change colors
+// $linkColor: red;
+
+// change grid
+// $gridColumnWidth: 70px;
+// $gridGutterWidth: 10px;
+
+// import original bootstrap
+@import "bootstrap";
+//@import "responsive"; till gridColumnWidth wont be hardcoded
