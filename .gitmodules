@@ -151,3 +151,9 @@
 [submodule "bundle/vim-bundler"]
 	path = bundle/vim-bundler
 	url = https://github.com/tpope/vim-bundler.git
+[submodule "bundle/tcomment_vim"]
+	path = bundle/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+[submodule "bundle/mustache.vim"]
+	path = bundle/mustache.vim
+	url = https://github.com/juvenn/mustache.vim.git
