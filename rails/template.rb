@@ -5,12 +5,8 @@ unless yes? "Quick mode?"
 
   copy_file "~/.vim/rails/Guardfile", "Guardfile"
   copy_file "~/.vim/rails/pl.yml", "config/locales/pl.yml"
-  copy_file "~/.vim/rails/nginx.conf", "config/nginx.conf"
-  copy_file "~/.vim/rails/unicorn.rb", "config/unicorn.rb"
-  copy_file "~/.vim/rails/unicorn_init.sh", "config/unicorn_init.sh"
   copy_file "~/.vim/rails/i18n.rb", "config/initializers/i18n.rb"
   copy_file "~/.vim/rails/quiet_assets.rb", "config/initializers/quiet_assets.rb"
-  system "chmod +x config/unicorn_init.sh"
 
   inject_into_file "config/application.rb", :after => "config.filter_parameters += [:password]" do
     <<-eos
@@ -40,47 +36,41 @@ unless yes? "Quick mode?"
   run "rm public/index.html"
   rake "db:create"
 
-  # To use debugger
-  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache', :group => [ :test, :development ]
-  gem 'ruby-debug-base19x', '~> 0.11.30.pre4', :group => [ :test, :development ]
-  gem 'ruby-debug19', :group => [ :test, :development ]
-
   gem 'haml'
   gem 'haml-rails'
   gem 'formtastic'
   gem 'friendly_id'
   gem 'faker'
-  gem 'unicorn', :group => [ :production ]
-  gem 'thin', :group => [ :production ]
-   
-  if yes? "Install Can Can and Devise?"
-    devise_and_can_can = true
+  gem "anjlab-bootstrap-rails", :require => "bootstrap-rails"
+
+  if devise_and_can_can = yes?("Install Can Can and Devise?")
     gem 'cancan'
     gem 'devise'
   end
 
-  gem 'capistrano', :group => [ :development ]
-  gem 'rspec', :group => [ :test, :development ]
-  gem 'rspec-rails', :group => [ :test, :development ]
-  gem 'capybara', :group => [ :test, :development ]
-  gem 'spork', :group => [ :test, :development ]
-  gem 'guard-spork', :group => [ :test, :development ]
-  gem 'guard', :group => [ :test, :development ]
-  gem 'guard-sass', :group => [ :test, :development ]
-  gem 'guard-rspec', :group => [ :test, :development ]
-  gem 'guard-livereload', :group => [ :test, :development ]
-  gem 'libnotify', :group => [ :test, :development ]
-  gem 'mocha', :group => [ :test, :development ]
-  gem 'factory_girl_rails', :group => [ :test, :development ]
-  gem "nifty-generators", :group => :development
-  gem "anjlab-bootstrap-rails", :group => :assets, :require => "bootstrap-rails"
+  gem_group :development, :test do
+    gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+    gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+    gem 'ruby-debug19'
+
+    gem 'rspec'
+    gem 'rspec-rails'
+    gem 'capybara'
+    gem 'spork'
+    gem 'guard-spork'
+    gem 'guard'
+    gem 'guard-sass'
+    gem 'guard-rspec'
+    gem 'guard-livereload'
+    gem 'libnotify'
+    gem 'mocha'
+    gem 'factory_girl_rails'
+    gem "nifty-generators"
+    gem 'deployer_files'
+  end
 
   system "gem install bundler"
   run 'bundle install'
-
-  #setup capistrano
-  copy_file "~/.vim/rails/deploy.rb", "config/deploy.rb"
-  copy_file "~/.vim/rails/Capfile", "Capfile"
 
   generate 'rspec:install'
 
